@@ -1,0 +1,9 @@
+type : object
+properties:
+  idProduct:
+    type: integer
+    description: Fonctionnel id of the product
+    format: int64
+  name:
+    type: string
+    description: Last Name

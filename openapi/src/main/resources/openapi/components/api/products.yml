@@ -1,0 +1,138 @@
+openapi: "3.0.0"
+
+info:
+  title: API Products
+  version: "1.0"
+  description: Ecommerce API
+
+servers:
+  - url: http://localhost:8080/admin_app/api
+
+tags:
+  - name: Products
+    description: Products specific data.
+
+paths:
+  /products:
+    get:
+      tags:
+        - Products
+      summary: Get All Actifs Product
+      operationId: getAllProducts
+      parameters:
+        - name: currentPage
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: sizePage
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: SUCCESS
+          content:
+            'application/json':
+              schema:
+                $ref: '../model/products/ProductsResultListDTO.yml'
+        '404':
+          description: NOT FOUND
+        '400':
+          description: BAD REQUEST
+    post:
+      tags:
+        - Products
+      summary: Add a product
+      operationId: createProduct
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../model/products/ProductDTO.yml'
+            example:
+              idProduct: 0
+              name: oranges
+              qtStock: 1293
+      responses:
+        '200':
+          description: SUCCESS
+          content:
+            application/json:
+              schema:
+                $ref: '../model/products/ProductDTO.yml'
+              example:
+                idProduct: 0
+                name: oranges
+                qtStock: 1293
+        '404':
+          description: NOT FOUND
+        '400':
+          description: BAD REQUEST
+    put:
+      tags:
+        - Products
+      summary: Update a product
+      operationId: updateProduct
+      parameters:
+        - name: idProduct
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          example:
+            idProduct: 1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../model/products/ProductDTO.yml'
+            examples:
+              product:
+                value:
+                  idProduct: 1
+                  name: pc gamer
+                  qtStock: 289
+      responses:
+        '200':
+          description: SUCCESS
+          content:
+            application/json:
+              schema:
+                $ref: '../model/products/ProductDTO.yml'
+              example:
+                idProduct: 1
+                name: pc gamer
+                qtStock: 289
+        '404':
+          description: NOT FOUND
+        '400':
+          description: BAD REQUEST
+  /products-reference:
+    get:
+      tags:
+        - Products
+      summary: Retrieve an product
+      operationId: getProduct
+      parameters:
+        - name: idProduct
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: SUCCESS
+          content:
+            'application/json':
+              schema:
+                $ref: '../model/products/ProductDTO.yml'
+        '404':
+          description: NOT FOUND
+        '400':
+          description: BAD REQUEST

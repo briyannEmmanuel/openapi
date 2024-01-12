@@ -1,0 +1,138 @@
+openapi: "3.0.0"
+
+info:
+  title: API Users
+  version: "1.0"
+  description: Ecommerce API
+
+servers:
+  - url: http://localhost:8080/admin_app/api
+
+tags:
+  - name: Users
+    description: Users specific data.
+
+paths:
+  /users:
+    get:
+      tags:
+        - Users
+      summary: Get All Actifs Users
+      operationId: getAllUsers
+      parameters:
+        - name: currentPage
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: sizePage
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: SUCCESS
+          content:
+            'application/json':
+              schema:
+                $ref: '../model/users/UsersResultListDTO.yml'
+        '404':
+          description: NOT FOUND
+        '400':
+          description: BAD REQUEST
+    post:
+      tags:
+        - Users
+      summary: Add a user
+      operationId: createUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../model/users/UserDTO.yml'
+            example:
+              idProduct: 0
+              name: oranges
+              qtStock: 1293
+      responses:
+        '200':
+          description: SUCCESS
+          content:
+            application/json:
+              schema:
+                $ref: '../model/users/UserDTO.yml'
+              example:
+                idProduct: 0
+                name: oranges
+                qtStock: 1293
+        '404':
+          description: NOT FOUND
+        '400':
+          description: BAD REQUEST
+    put:
+      tags:
+        - Users
+      summary: Add a user
+      operationId: updateUser
+      parameters:
+        - name: idUser
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          example:
+            idProduct: 1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../model/users/UserDTO.yml'
+            examples:
+              product:
+                value:
+                  idProduct: 1
+                  name: pc gamer
+                  qtStock: 289
+      responses:
+        '200':
+          description: SUCCESS
+          content:
+            application/json:
+              schema:
+                $ref: '../model/users/UserDTO.yml'
+              example:
+                idProduct: 1
+                name: pc gamer
+                qtStock: 289
+        '404':
+          description: NOT FOUND
+        '400':
+          description: BAD REQUEST
+  /users-reference:
+    get:
+      tags:
+        - Users
+      summary: Retrieve an user
+      operationId: getUser
+      parameters:
+        - name: idUser
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: SUCCESS
+          content:
+            'application/json':
+              schema:
+                $ref: '../model/users/UserDTO.yml'
+        '404':
+          description: NOT FOUND
+        '400':
+          description: BAD REQUEST
